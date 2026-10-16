@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Login complete – Faktenshorts</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .box { border: 1px solid var(--line); border-radius: 10px; padding: 14px; word-break: break-all; font-family: ui-monospace, Consolas, monospace; font-size: 0.85rem; }
+    button { margin-top: 12px; padding: 10px 18px; border: 0; border-radius: 8px; background: var(--accent); color: #fff; font-weight: 700; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="index.html">Faktenshorts</a>
+  </header>
+  <main>
+    <h1 id="title">Login complete</h1>
+    <p id="hint">Copy the full address below and paste it into the Faktenshorts window on your computer.
+      <br><span class="muted">Kopiere die komplette Adresse und füge sie im Faktenshorts-Fenster auf deinem PC ein.</span></p>
+    <div class="box" id="url"></div>
+    <button id="copy" type="button">Copy / Kopieren</button>
+    <p class="muted">This page stores nothing. The code in the address is only valid for a few minutes.</p>
+  </main>
+  <script>
+    var u = window.location.href, box = document.getElementById("url");
+    box.textContent = u;
+    var q = new URLSearchParams(window.location.search);
+    if (q.get("error")) {
+      document.getElementById("title").textContent = "Login cancelled";
+      document.getElementById("hint").textContent = "TikTok reported: " + (q.get("error_description") || q.get("error"));
+    }
+    document.getElementById("copy").addEventListener("click", function () {
+      try { navigator.clipboard.writeText(u); this.textContent = "Copied ✓ / Kopiert ✓"; } catch (e) {}
+    });
+  </script>
+</body>
+</html>
